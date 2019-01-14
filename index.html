@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  <div>
+    <p>
+      <span>R:</span>
+      <input id="inputR" name="inputR" type="number" value="4" minlength="1" required />
+    </p>
+    <div>
+      <input type="range" id="iterations" name="iterations" min="100" max="100000" value="100" step="100">
+      <label for="iterations">Iterations</label>
+      <span id="maxIterSpan"></span>
+    </div>
+    <div>
+      <input type="range" id="pFactor" name="pFactor" min="1" max="32" value="1" step="1">
+      <label for="pFactor">Parallelism factor</label>
+      <span id="pFactorSpan"></span>
+    </div>
+    <button id="btn" type="button">Try!</button>
+    <p>
+      <span>Time passed:&nbsp;</span>
+      <span id="timePassed"></span>
+    </p>
+  </div>
+  
+  <div>
+    <canvas id="fractal" width="300" height="200"></canvas>
+  </div>
+  
+  <script src="main.js"></script>
+</body>
+
+</html>
