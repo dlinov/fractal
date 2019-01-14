@@ -1,7 +1,7 @@
 onmessage = function(e) {
   console.log('Worker: Message received from main script: ' + e.data);
   const data = e.data;
-  const R = data.R;
+  const squaredR = data.R * data.R;
   const w = data.w;
   const h = data.h;
   const minX = data.minX;
@@ -23,7 +23,7 @@ onmessage = function(e) {
       let z = Z0;
       for (let k = 0; k < maxIterations; ++k) {
         z = z.mult(z).plus(c);
-        if (z.abs > R) {
+        if (z.absSq > squaredR) {
           results.push({i: i, j: j});
           break;
         }
@@ -61,6 +61,9 @@ class Complex {
     return new Complex(nX, nY);
   }
   get abs() {
+    return Math.sqrt(this.x * this.x + this.y + this.y);
+  }
+  get absSq() {
     return Math.sqrt(this.x * this.x + this.y + this.y);
   }
 };
