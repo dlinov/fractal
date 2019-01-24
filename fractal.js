@@ -15,14 +15,15 @@ onmessage = function(e) {
   const iMin = data.workFraction.startIncl;
   const iMax = data.workFraction.endExcl;
   let results = [];
+  const c = new Complex(0, 0);
   for (let i = iMin; i < iMax; i++) {
-    const p = i / w * xScale + minX;
+    c.x = i / w * xScale + minX;
     for (let j = 0; j < h; j++) {
-      const q = j / h * yScale + minY;
-      const c = new Complex(p, q);
-      let z = Z0;
+      c.y = j / h * yScale + minY;
+      let z = new Complex(Z0.x, Z0.y);
       for (let k = 0; k < maxIterations; ++k) {
-        z = z.mult(z).plus(c);
+        z.multInline(z)
+        z.plusInline(c);
         if (z.absSq > squaredR) {
           results.push({i: i, j: j});
           break;
@@ -44,21 +45,22 @@ class Complex {
     const nY = this.y + other.y;
     return new Complex(nX, nY);
   }
-  minus(other) {
-    const nX = this.x - other.x;
-    const nY = this.y - other.y;
-    return new Complex(nX, nY);
+  plusInline(other) {
+    const nX = this.x + other.x;
+    const nY = this.y + other.y;
+    this.x = nX;
+    this.y = nY;
   }
   mult(other) {
     const nX = this.x * other.x - this.y * other.y;
     const nY = this.x * other.y + other.x * this.y;
     return new Complex(nX, nY);
   }
-  div(other) {
-    const den = other.x * other.x + other.y * other.y;
-    const nX = (this.x * other.x + this.y * other.y) / den;
-    const nY = (other.x * this.y - this.x * other.y) / den;
-    return new Complex(nX, nY);
+  multInline(other) {
+    const nX = this.x * other.x - this.y * other.y;
+    const nY = this.x * other.y + other.x * this.y;
+    this.x = nX;
+    this.y = nY;
   }
   get abs() {
     return Math.sqrt(this.x * this.x + this.y + this.y);
