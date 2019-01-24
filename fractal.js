@@ -40,21 +40,11 @@ class Complex {
     this.x = x;
     this.y = y;
   }
-  plus(other) {
-    const nX = this.x + other.x;
-    const nY = this.y + other.y;
-    return new Complex(nX, nY);
-  }
   plusInline(other) {
     const nX = this.x + other.x;
     const nY = this.y + other.y;
     this.x = nX;
     this.y = nY;
-  }
-  mult(other) {
-    const nX = this.x * other.x - this.y * other.y;
-    const nY = this.x * other.y + other.x * this.y;
-    return new Complex(nX, nY);
   }
   multInline(other) {
     const nX = this.x * other.x - this.y * other.y;
@@ -62,10 +52,7 @@ class Complex {
     this.x = nX;
     this.y = nY;
   }
-  get abs() {
-    return Math.sqrt(this.x * this.x + this.y + this.y);
-  }
   get absSq() {
-    return Math.sqrt(this.x * this.x + this.y + this.y);
+    return this.x * this.x + this.y * this.y;
   }
 };
